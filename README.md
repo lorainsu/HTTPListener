@@ -1,6 +1,6 @@
 ### HTTPListener
 ***
-It's a light Java tool to listen and display your HTTP request implement by HTTPClient.
+It's a light Java tool to listen and display your HTTP request implement by Jetty.
 
 Ensure JRE installed in your system, have a nice try!
 ***
