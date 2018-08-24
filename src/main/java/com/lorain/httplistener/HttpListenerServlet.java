@@ -11,12 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JTextArea;
 
 @WebServlet("/")
 public class HttpListenerServlet extends HttpServlet
 {
-    private static JTextArea area = MainFrame.area;
+    private static DisplayInterface display = StartUp.display;
     
     private static final long serialVersionUID = -4628761235513786630L;
     
@@ -48,7 +47,7 @@ public class HttpListenerServlet extends HttpServlet
             }
             catch (NumberFormatException e)
             {
-                area.append("WARN:Customize Http StatusCode is illegal, customizeHttpStatusCode disabled\n\n");
+                display.write("WARN:Customize Http StatusCode is illegal, customizeHttpStatusCode disabled\n\n");
                 customizeHttpStatusCodeEnable = false;
             }
         }
@@ -66,7 +65,7 @@ public class HttpListenerServlet extends HttpServlet
         }
         catch (ArrayIndexOutOfBoundsException e)
         {
-            area.append("WARN:Customize Response Headers is illegal, customizeResponseHeaders disabled\n\n");
+            display.write("WARN:Customize Response Headers is illegal, customizeResponseHeaders disabled\n\n");
             customizeResponseHeadersEnable = false;
         }
         
@@ -80,7 +79,7 @@ public class HttpListenerServlet extends HttpServlet
         }
         catch (NumberFormatException e)
         {
-            area.append("WARN:Customize sleepTime is illegal, sleep disabled\n\n");
+            display.write("WARN:Customize sleepTime is illegal, sleep disabled\n\n");
         }
     }
     
@@ -91,7 +90,7 @@ public class HttpListenerServlet extends HttpServlet
         appendRequestLine(req);
         appendHeaders(req);
         
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         
         resp.setContentType("charset=utf-8");
@@ -117,7 +116,7 @@ public class HttpListenerServlet extends HttpServlet
         appendRequestLine(req);
         appendHeaders(req);
         appendEntity(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         
         resp.setContentType("charset=utf-8");
@@ -141,7 +140,7 @@ public class HttpListenerServlet extends HttpServlet
     {
         appendRequestLine(req);
         appendHeaders(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         resp.setContentType("charset=utf-8");
         if (customizeHttpStatusCodeEnable)
@@ -163,7 +162,7 @@ public class HttpListenerServlet extends HttpServlet
         appendRequestLine(req);
         appendHeaders(req);
         appendEntity(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         resp.setContentType("charset=utf-8");
         if (customizeHttpStatusCodeEnable)
@@ -184,7 +183,7 @@ public class HttpListenerServlet extends HttpServlet
     {
         appendRequestLine(req);
         appendHeaders(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         resp.setContentType("charset=utf-8");
         if (customizeHttpStatusCodeEnable)
@@ -205,7 +204,7 @@ public class HttpListenerServlet extends HttpServlet
     {
         appendRequestLine(req);
         appendHeaders(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         resp.setContentType("charset=utf-8");
         if (customizeHttpStatusCodeEnable)
@@ -226,7 +225,7 @@ public class HttpListenerServlet extends HttpServlet
     {
         appendRequestLine(req);
         appendHeaders(req);
-        MainFrame.appendSplitLine();
+        display.splitLine();
         sleep();
         resp.setContentType("charset=utf-8");
         if (customizeHttpStatusCodeEnable)
@@ -243,13 +242,13 @@ public class HttpListenerServlet extends HttpServlet
     
     private void appendRequestLine(HttpServletRequest req)
     {
-        area.append(req.getMethod() + " ");
-        area.append(req.getRequestURI());
+        display.write(req.getMethod() + " ");
+        display.write(req.getRequestURI());
         if (null != req.getQueryString())
-            area.append("?" + req.getQueryString());
+            display.write("?" + req.getQueryString());
         
-        area.append(" " + req.getProtocol());
-        area.append("  From Address:" + getRemoteIp(req) + "\n\n");
+        display.write(" " + req.getProtocol());
+        display.write("  From Address:" + getRemoteIp(req) + "\n\n");
     }
     
     private void appendHeaders(HttpServletRequest req)
@@ -258,9 +257,9 @@ public class HttpListenerServlet extends HttpServlet
         while (headers.hasMoreElements())
         {
             String header = headers.nextElement();
-            area.append(header + ": " + req.getHeader(header) + "\n");
+            display.write(header + ": " + req.getHeader(header) + "\n");
         }
-        area.append("\n");
+        display.write("\n");
     }
     
     private void appendEntity(HttpServletRequest req)
@@ -270,9 +269,9 @@ public class HttpListenerServlet extends HttpServlet
         String line = null;
         while ((line = reader.readLine()) != null)
         {
-            area.append(line + "\n");
+            display.write(line + "\n");
         }
-        area.append("\n");
+        display.write("\n");
     }
     
     private void customizeResponseHeaders(HttpServletResponse resp)
@@ -334,7 +333,7 @@ public class HttpListenerServlet extends HttpServlet
             }
             catch (InterruptedException e)
             {
-                area.append("sleep failed:" + e.getMessage() + "\n");
+                display.write("sleep failed:" + e.getMessage() + "\n");
             }
         }
         return;

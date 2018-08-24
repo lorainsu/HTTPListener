@@ -29,7 +29,7 @@ public abstract class PropertiesUtils
         }
         catch (IOException e)
         {
-            MainFrame.area.append("Exception happened in loadProp() :" + e.getMessage());
+            StartUp.display.write("Exception happened in loadProp() :" + e.getMessage());
         }
         finally
         {
@@ -40,7 +40,7 @@ public abstract class PropertiesUtils
                 }
                 catch (IOException e)
                 {
-                    MainFrame.area.append("Exception happened in loadProperty() :" + e.getMessage());
+                    StartUp.display.write("Exception happened in loadProperty() :" + e.getMessage());
                 }
         }
     }
